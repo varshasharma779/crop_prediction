@@ -8,7 +8,7 @@ model = joblib.load('crop_app.pkl')
 
 @app.route('/')
 def prediction():
-    return render_template("Index.html")
+    return render_template("index.html")
 
 @app.route('/predict', methods=["POST"])
 def brain():
@@ -18,7 +18,7 @@ def brain():
         Potassium = float(request.form['Potassium'])
         Temperature = float(request.form['Temperature'])
         Humidity = float(request.form['Humidity'])
-        Ph = float(request.form['Ph'])
+        Ph = float(request.form['ph'])
         Rainfall = float(request.form['Rainfall'])
 
         values = [Nitrogen, Phosphorus, Potassium, Temperature, Humidity, Ph, Rainfall]
@@ -26,7 +26,7 @@ def brain():
         if 0 < Ph < 14 and Temperature < 100 and Humidity > 0:
             
             prediction = model.predict([values])
-            return render_template("index.html", prediction=prediction)
+            return render_template("prediction.html", prediction=prediction)
         else:
             return "Invalid input values", 400
     except ValueError as e:
